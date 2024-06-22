@@ -1,0 +1,76 @@
+<main-sidenav-container panel="panel">
+  <main-sidenav
+    [breakpoint]="'md'"
+    [direction]="'right'"
+    [opened]="true"
+    [hoverAble]="true"
+    [mode]="'side'"
+    [toggleableBtn]="true"
+    initWidth="300">
+
+    <main-sidenav-container panel="panel">
+      <main-sidenav
+        [breakpoint]="'md'"
+        [direction]="'bottom'"
+        [opened]="true"
+        [hoverAble]="true"
+        [mode]="'side'"
+        [toggleableBtn]="true"
+        initWidth="500">
+        <div fxFill fxLayout="column" class="app-bg-container relative">
+          <div class="app-header app-header--sm">
+            <div class="app-expressive-heading-02">Split bottom</div>
+          </div>
+        </div>
+      </main-sidenav>
+
+      <div fxFill fxLayout="column" class="app-bg-container relative">
+        <div class="app-header app-header--sm">
+          <div class="app-expressive-heading-02">Split top</div>
+        </div>
+        <div fxFlex class="relative">
+          <div class="app-a-box app-bg-container app-scrollbar-fix">
+            <ng-scrollbar>
+
+            </ng-scrollbar>
+          </div>
+        </div>
+      </div>
+
+    </main-sidenav-container>
+  </main-sidenav>
+
+  <main-sidenav-container panel="panel">
+    <main-sidenav
+      [breakpoint]="'md'"
+      [direction]="'bottom'"
+      [opened]="true"
+      [hoverAble]="true"
+      [mode]="'side'"
+      initWidth="370"
+      [toggleableBtn]="true"
+      [size]="'sideBar1'">
+      <div fxFill fxLayout="column" class="app-bg-container relative">
+        <div class="app-header app-header--sm">
+          <div class="app-expressive-heading-02">Bottom</div>
+        </div>
+      </div>
+    </main-sidenav>
+
+    <div fxFill fxLayout="column" class="relative">
+      <main-header [bordered]="true">
+        <main-header-title>
+          Main header
+        </main-header-title>
+        <main-header-tools>
+          <button ibmButton="primary" size="sm" class="mr-1">
+            Button
+            <svg class="bx--btn__icon" ibmIconAdd size="20"></svg>
+          </button>
+        </main-header-tools>
+      </main-header>
+    </div>
+  </main-sidenav-container>
+
+</main-sidenav-container>
+

@@ -1,0 +1,88 @@
+<div class="app-layout"
+     [ngClass.lt-md]="{'app-layout--show-header': true}">
+
+  <!-- BEGIN: MAIN SIDENAV CONTAINER -->
+  <main-sidenav-container>
+
+    <!-- BEGIN: THEME SETTINGS BTN -->
+    <div class="app-theme-settings-btn"
+         (click)="onToggleThemeSettings()"
+         placement="left"
+         container="body"
+         ngbTooltip="Theme settings">
+      <main-ibm-icon iconName="settingsAdjust" iconSize="24"></main-ibm-icon>
+    </div>
+    <!-- END: THEME SETTINGS BTN -->
+
+    <!-- BEGIN: THEME SETTINGS SIDEBAR -->
+    <main-sidenav
+      (close)="onCloseSettings($event)"
+      [opened]="settingsVisible"
+      [direction]="'right'"
+      [mode]="'over'"
+      [size]="'md'">
+      <main-theme-settings></main-theme-settings>
+    </main-sidenav>
+    <!-- END: THEME SETTINGS SIDEBAR -->
+
+    <!-- BEGIN: MAIN HEADER (XS VIEW) -->
+    <app-main-header (menuClick)="onSideBarToggle($event)"
+                     (itemClick)="onMiniSidebarItemClick($event)"
+                     class="app-layout__header"></app-main-header>
+    <!-- BEGIN: END HEADER (XS VIEW) -->
+
+    <!-- BEGIN: MAIN MINI SIDEBAR (LEFT) -->
+    <div class="app-layout__mini-sidebar">
+      <div class="app-mini-sidebar">
+        <app-layout-mini-sidebar (itemClick)="onMiniSidebarItemClick($event)"></app-layout-mini-sidebar>
+      </div>
+    </div>
+    <!-- END: MAIN MINI SIDEBAR (LEFT) -->
+
+    <!-- BEGIN: MAIN LAYOUT -->
+    <div class="app-layout__content">
+      <main-sidenav-container>
+
+        <!-- BEGIN: MAIN SIDEBAR -->
+        <main-sidenav
+          [breakpoint]="mainSidebarOpts.breakpoint"
+          [opened]="mainSidebarOpts.opened"
+          [hoverAble]="mainSidebarOpts.hoverAble"
+          [mode]="mainSidebarOpts.mode"
+          [toggleableBtn]="mainSidebarOpts.toggleableBtn"
+          [size]="mainSidebarOpts.size"
+          (visibleChange)="onVisibilityChange($event)">
+          <app-layout-sidebar
+            [menu]="menu"
+            [opened]="mainSidebarOpts.opened"
+            (sideBarToggle)="onSideBarToggle($event)"></app-layout-sidebar>
+        </main-sidenav>
+        <!-- END: MAIN SIDEBAR -->
+
+        <!-- BEGIN: MAIN PAGE CONTENT -->
+        <div class="app-layout__content__inner">
+          <router-outlet #outlet="outlet"></router-outlet>
+        </div>
+        <!-- END: MAIN PAGE CONTENT -->
+
+      </main-sidenav-container>
+    </div>
+    <!-- END: MAIN LAYOUT -->
+
+  </main-sidenav-container>
+
+  <!-- END: MAIN SIDENAV CONTAINER -->
+</div>
+
+<!-- BEGIN: GLOBAL SEARCH DIALOG -->
+<ng-container *ngIf="searchVisible">
+  <main-search (close)="onSearchClose($event)"></main-search>
+</ng-container>
+<!-- END: GLOBAL SEARCH DIALOG -->
+
+<!-- BEGIN: LOCK SCREEN DIALOG -->
+<ng-container *ngIf="lockScreenVisible">
+  <main-lock-screen (close)="onLockClose($event)"></main-lock-screen>
+</ng-container>
+<!-- END: LOCK SCREEN DIALOG -->
+

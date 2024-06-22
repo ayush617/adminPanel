@@ -1,0 +1,36 @@
+<main-sidenav-container panel="solid">
+  <main-sidenav
+    direction="right"
+    breakpoint="md"
+    [opened]="true"
+    hoverAble="true"
+    mode="side"
+    [toggleableBtn]="true"
+    size="custom1">
+    <div class="app-content app-content--default">
+      <div class="app-productive-heading-02">Resizable & hoverable</div>
+    </div>
+  </main-sidenav>
+  <main-header [bordered]="true">
+    <main-header-title>
+      Main header
+    </main-header-title>
+    <main-header-tools>
+      <button ibmButton="primary" size="sm" class="mr-1">
+        Button
+        <svg class="bx--btn__icon" ibmIconAdd size="20"></svg>
+      </button>
+    </main-header-tools>
+  </main-header>
+  <main-sidenav
+    breakpoint="md"
+    [opened]="true"
+    hoverAble="true"
+    mode="side"
+    [toggleableBtn]="true"
+    size="custom1">
+    <div class="app-content app-content--default">
+      <div class="app-productive-heading-02">Resizable & hoverable</div>
+    </div>
+  </main-sidenav>
+</main-sidenav-container>
