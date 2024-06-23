@@ -96,7 +96,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'basic',
+    path: '',
     component: AppLayoutBasicComponent,
     children: [
       {

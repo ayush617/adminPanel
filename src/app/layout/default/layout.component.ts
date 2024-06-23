@@ -29,7 +29,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   public searchVisible: boolean = false
   public lockScreenVisible: boolean = false
 
-  public menu: Array<MenuType> = [
+  public customMenu: Array<MenuType> = []
+
+  public creatorMenu: Array<MenuType> = [
     {
       groupName: 'DASHBOARDS',
       opened: true,
@@ -750,6 +752,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
       ]
     }
   ]
+
+  public menu: Array<MenuType> = this.creatorMenu
 
   constructor(private settingsService: SettingsService,
               private appMenuService: AppMenuService) {
