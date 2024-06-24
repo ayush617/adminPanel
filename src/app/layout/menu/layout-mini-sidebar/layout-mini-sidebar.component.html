@@ -308,7 +308,8 @@
             <div class="app-list__item__content mr-4">
               <div>
                 <div class="app-helper-text-01">Signed in as</div>
-                <div class="app-expressive-heading-02">David Robson</div>
+                <div class="app-expressive-heading-02">{{profile?.firstName}} {{profile?.lastName}}</div>
+                <div class="app-helper-text-01">({{profile?.userName}})</div>
               </div>
             </div>
           </div>
@@ -329,7 +330,7 @@
             </div>
           </div>
           <div class="app-list__divider"></div>
-          <div class="app-list__item mb-2" ngbDropdownItem routerLink="/auth/modern/signin">
+          <div class="app-list__item mb-2" ngbDropdownItem routerLink="/auth/signout">
             <div class="app-list__item__content">
               Logout
             </div>

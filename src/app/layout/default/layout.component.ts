@@ -4,6 +4,7 @@ import {Subject} from "rxjs"
 import {defaultRouterTransition, MenuType} from "../../../@common"
 import {SettingsService} from "../../../@common"
 import {AppMenuService} from "../../../@common"
+import { UpdateService } from 'src/app/services/update.service'
 
 @Component({
   selector: 'app-layout',
@@ -38,7 +39,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       children: [
         {
           name: 'Dashboard',
-          url: '/app/dashboard/default',
+          url: '/home',
           prefix: {
             type: 'ibm-icon',
             name: 'home',
@@ -46,7 +47,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         },
         {
           name: 'Platform analytics',
-          url: '/app/dashboard/analytics',
+          url: '/home/analytics',
           prefix: {
             type: 'ibm-icon',
             name: 'activity',
@@ -54,7 +55,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         },
         {
           name: 'Stocks / crypto',
-          url: '/app/dashboard/crypto',
+          url: '/home/crypto',
           prefix: {
             type: 'ibm-icon',
             name: 'analytics',
@@ -78,7 +79,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'dashboardReference',
           },
-          url: '/app/scrum-board',
+          url: '/home/scrum-board',
         },
         {
           name: 'Tasks',
@@ -91,7 +92,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             level: 'danger',
             text: 3,
           },
-          url: '/app/tasks',
+          url: '/home/tasks',
         },
         {
           name: 'File manager',
@@ -99,7 +100,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'folder',
           },
-          url: '/app/file-manager',
+          url: '/home/file-manager',
         },
         {
           name: 'Mail',
@@ -112,7 +113,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             level: 'success',
             text: 'NEW',
           },
-          url: '/app/mail',
+          url: '/home/mail',
         },
         {
           name: 'Messages',
@@ -120,7 +121,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'sendAlt',
           },
-          url: '/app/messages',
+          url: '/home/messages',
         }
       ]
     },
@@ -130,7 +131,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       children: [
         {
           name: 'User',
-          parentUrl: '/app/user',
+          parentUrl: '/home/user',
           prefix: {
             type: 'ibm-icon',
             name: 'userAvatar',
@@ -138,25 +139,25 @@ export class LayoutComponent implements OnInit, OnDestroy {
           children: [
             {
               name: 'Settings',
-              url: '/app/user/settings',
+              url: '/home/user/settings',
             },
             {
               name: 'Billing',
-              url: '/app/user/billing',
+              url: '/home/user/billing',
             },
             {
               name: 'Creditcard',
-              url: '/app/user/creditcard',
+              url: '/home/user/creditcard',
             },
             {
               name: 'Transactions',
-              url: '/app/user/transactions',
+              url: '/home/user/transactions',
             },
           ]
         },
         {
           name: 'Web application',
-          parentUrl: '/app/application',
+          parentUrl: '/home/application',
           prefix: {
             type: 'ibm-icon',
             name: 'application',
@@ -164,27 +165,27 @@ export class LayoutComponent implements OnInit, OnDestroy {
           children: [
             {
               name: 'Welcome',
-              url: '/app/application/welcome',
+              url: '/home/application/welcome',
             },
             {
               name: 'Getting started',
-              url: '/app/application/getting-started',
+              url: '/home/application/getting-started',
             },
             {
               name: 'FAQ',
-              url: '/app/application/faq',
+              url: '/home/application/faq',
             },
             {
               name: 'Documentation',
-              url: '/app/application/manual',
+              url: '/home/application/manual',
             },
             {
               name: 'Support',
-              url: '/app/application/support',
+              url: '/home/application/support',
             },
             {
               name: 'Changelog',
-              url: '/app/application/changelog',
+              url: '/home/application/changelog',
             },
           ]
         },
@@ -200,19 +201,19 @@ export class LayoutComponent implements OnInit, OnDestroy {
               children: [
                 {
                   name: 'Style #1',
-                  url: '/auth/modern/signin'
+                  url: '/home/modern/signin'
                 },
                 {
                   name: 'Style #2',
-                  url: '/auth/full/signin'
+                  url: '/home/full/signin'
                 },
                 {
                   name: 'Style #3',
-                  url: '/auth/full-middle/signin'
+                  url: '/home/full-middle/signin'
                 },
                 {
                   name: 'Style #4',
-                  url: '/auth/basic/signin'
+                  url: '/home/basic/signin'
                 }
               ]
             },
@@ -221,25 +222,25 @@ export class LayoutComponent implements OnInit, OnDestroy {
               children: [
                 {
                   name: 'Style #1',
-                  url: '/auth/modern/signup'
+                  url: '/home/modern/signup'
                 },
                 {
                   name: 'Style #2',
-                  url: '/auth/full/signup'
+                  url: '/home/full/signup'
                 },
                 {
                   name: 'Style #3',
-                  url: '/auth/full-middle/signup'
+                  url: '/home/full-middle/signup'
                 },
                 {
                   name: 'Style #4',
-                  url: '/auth/basic/signup'
+                  url: '/home/basic/signup'
                 }
               ]
             },
             {
               name: 'Book a demo',
-              url: '/auth/book-a-demo',
+              url: '/home/book-a-demo',
               suffix: {
                 type: 'badge',
                 level: 'danger',
@@ -248,23 +249,23 @@ export class LayoutComponent implements OnInit, OnDestroy {
             },
             {
               name: 'Confirmation',
-              url: '/auth/confirmation',
+              url: '/home/confirmation',
               children: [
                 {
                   name: 'Style #1',
-                  url: '/auth/modern/confirmation'
+                  url: '/home/modern/confirmation'
                 },
                 {
                   name: 'Style #2',
-                  url: '/auth/full/confirmation'
+                  url: '/home/full/confirmation'
                 },
                 {
                   name: 'Style #3',
-                  url: '/auth/full-middle/confirmation'
+                  url: '/home/full-middle/confirmation'
                 },
                 {
                   name: 'Style #4',
-                  url: '/auth/basic/confirmation'
+                  url: '/home/basic/confirmation'
                 }
               ]
             },
@@ -274,19 +275,19 @@ export class LayoutComponent implements OnInit, OnDestroy {
               children: [
                 {
                   name: 'Style #1',
-                  url: '/auth/modern/forgot-password'
+                  url: '/home/modern/forgot-password'
                 },
                 {
                   name: 'Style #2',
-                  url: '/auth/full/forgot-password'
+                  url: '/home/full/forgot-password'
                 },
                 {
                   name: 'Style #3',
-                  url: '/auth/full-middle/forgot-password'
+                  url: '/home/full-middle/forgot-password'
                 },
                 {
                   name: 'Style #4',
-                  url: '/auth/basic/forgot-password'
+                  url: '/home/basic/forgot-password'
                 }
               ]
             },
@@ -295,19 +296,19 @@ export class LayoutComponent implements OnInit, OnDestroy {
               children: [
                 {
                   name: 'Style #1',
-                  url: '/auth/modern/reset-password'
+                  url: '/home/modern/reset-password'
                 },
                 {
                   name: 'Style #2',
-                  url: '/auth/full/reset-password'
+                  url: '/home/full/reset-password'
                 },
                 {
                   name: 'Style #3',
-                  url: '/auth/full-middle/reset-password'
+                  url: '/home/full-middle/reset-password'
                 },
                 {
                   name: 'Style #4',
-                  url: '/auth/basic/reset-password'
+                  url: '/home/basic/reset-password'
                 }
               ]
             },
@@ -319,7 +320,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         },
         {
           name: 'Pricing',
-          parentUrl: '/app/pricing',
+          parentUrl: '/home/pricing',
           prefix: {
             type: 'ibm-icon',
             name: 'money',
@@ -327,15 +328,15 @@ export class LayoutComponent implements OnInit, OnDestroy {
           children: [
             {
               name: 'Startup',
-              url: '/app/pricing/modern',
+              url: '/home/pricing/modern',
             },
             {
               name: 'Corporate',
-              url: '/app/pricing/table',
+              url: '/home/pricing/table',
             },
             {
               name: 'Basic',
-              url: '/app/pricing/simple',
+              url: '/home/pricing/simple',
             },
           ]
         },
@@ -345,7 +346,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'faceActivated',
           },
-          url: '/app/profile',
+          url: '/home/profile',
         },
         {
           name: 'Timeline',
@@ -353,7 +354,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'alarm',
           },
-          url: '/app/timeline',
+          url: '/home/timeline',
         },
         {
           name: 'Invoice',
@@ -361,7 +362,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'document',
           },
-          url: '/app/invoice',
+          url: '/home/invoice',
         },
         {
           name: 'Search result',
@@ -369,7 +370,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'imageSearch',
           },
-          url: '/app/search-result',
+          url: '/home/search-result',
         },
         {
           name: 'Coming soon',
@@ -381,19 +382,19 @@ export class LayoutComponent implements OnInit, OnDestroy {
           children: [
             {
               name: 'Style #1',
-              url: '/auth/coming-soon/modern'
+              url: '/home/coming-soon/modern'
             },
             {
               name: 'Style #2',
-              url: '/auth/coming-soon/full'
+              url: '/home/coming-soon/full'
             },
             {
               name: 'Style #3',
-              url: '/auth/coming-soon/full-middle'
+              url: '/home/coming-soon/full-middle'
             },
             {
               name: 'Style #4',
-              url: '/auth/coming-soon/basic'
+              url: '/home/coming-soon/basic'
             }
           ]
         },
@@ -403,7 +404,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'hourglass',
           },
-          url: '/app/maintenance',
+          url: '/home/maintenance',
         },
         {
           name: 'Errors',
@@ -419,17 +420,17 @@ export class LayoutComponent implements OnInit, OnDestroy {
           children: [
             {
               name: '404',
-              url: '/app/errors/404',
+              url: '/home/errors/404',
             },
             {
               name: '500',
-              url: '/app/errors/500',
+              url: '/home/errors/500',
             },
           ]
         },
         {
           name: 'Starters',
-          parentUrl: '/app/starters',
+          parentUrl: '/home/starters',
           prefix: {
             type: 'ibm-icon',
             name: '3dCursorAlt',
@@ -437,73 +438,73 @@ export class LayoutComponent implements OnInit, OnDestroy {
           children: [
             {
               name: 'Full width',
-              parentUrl: '/app/starters/full-width',
+              parentUrl: '/home/starters/full-width',
               children: [
                 {
                   name: 'Basic',
-                  url: '/app/starters/full-width/basic'
+                  url: '/home/starters/full-width/basic'
                 },
                 {
                   name: 'Header',
-                  url: '/app/starters/full-width/header'
+                  url: '/home/starters/full-width/header'
                 },
                 {
                   name: 'Tabs',
-                  url: '/app/starters/full-width/tabs'
+                  url: '/home/starters/full-width/tabs'
                 }
               ]
             },
             {
               name: 'Left sidebar',
-              parentUrl: '/app/starters/left-sidebar',
+              parentUrl: '/home/starters/left-sidebar',
               children: [
                 {
                   name: 'Basic',
-                  url: '/app/starters/left-sidebar/basic'
+                  url: '/home/starters/left-sidebar/basic'
                 },
                 {
                   name: 'Header',
-                  url: '/app/starters/left-sidebar/header'
+                  url: '/home/starters/left-sidebar/header'
                 },
                 {
                   name: 'Tabs',
-                  url: '/app/starters/left-sidebar/tabs'
+                  url: '/home/starters/left-sidebar/tabs'
                 }
               ]
             },
             {
               name: 'Right sidebar',
-              parentUrl: '/app/starters/right-sidebar',
+              parentUrl: '/home/starters/right-sidebar',
               children: [
                 {
                   name: 'Basic',
-                  url: '/app/starters/right-sidebar/basic'
+                  url: '/home/starters/right-sidebar/basic'
                 },
                 {
                   name: 'Header',
-                  url: '/app/starters/right-sidebar/header'
+                  url: '/home/starters/right-sidebar/header'
                 },
                 {
                   name: 'Tabs',
-                  url: '/app/starters/right-sidebar/tabs'
+                  url: '/home/starters/right-sidebar/tabs'
                 }
               ]
             },
             {
               name: 'Application',
-              parentUrl: '/app/starters/application',
+              parentUrl: '/home/starters/application',
               children: [
                 {
                   name: 'Basic',
-                  url: '/app/starters/application/basic'
+                  url: '/home/starters/application/basic'
                 },
                 {
                   name: 'Advanced',
-                  url: '/app/starters/application/advanced'
+                  url: '/home/starters/application/advanced'
                 },
                 {
                   name: 'Complex',
-                  url: '/app/starters/application/complex'
+                  url: '/home/starters/application/complex'
                 }
               ]
             },
@@ -517,7 +518,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       children: [
         {
           name: 'UI components',
-          url: '/app/ui-components',
+          url: '/home/ui-components',
           prefix: {
             type: 'ibm-icon',
             name: 'view',
@@ -529,11 +530,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'phraseSentiment',
           },
-          parentUrl: '/app/widgets',
+          parentUrl: '/home/widgets',
           children: [
             {
               name: 'General',
-              url: '/app/widgets/general',
+              url: '/home/widgets/general',
               suffix: {
                 type: 'badge',
                 level: 'default',
@@ -542,17 +543,17 @@ export class LayoutComponent implements OnInit, OnDestroy {
             },
             {
               name: 'Cards',
-              url: '/app/widgets/cards',
+              url: '/home/widgets/cards',
             },
             {
               name: 'Lists',
-              url: '/app/widgets/lists',
+              url: '/home/widgets/lists',
             },
           ]
         },
         {
           name: 'Tables',
-          parentUrl: '/app/tables',
+          parentUrl: '/home/tables',
           prefix: {
             type: 'ibm-icon',
             name: 'tableSplit',
@@ -560,15 +561,15 @@ export class LayoutComponent implements OnInit, OnDestroy {
           children: [
             {
               name: 'Basic',
-              url: '/app/tables/basic',
+              url: '/home/tables/basic',
             },
             {
               name: 'Advanced',
-              url: '/app/tables/advanced',
+              url: '/home/tables/advanced',
             },
             {
               name: 'Full Datagrid',
-              url: '/app/tables/full',
+              url: '/home/tables/full',
               suffix: {
                 type: 'badge',
                 level: 'danger',
@@ -583,29 +584,29 @@ export class LayoutComponent implements OnInit, OnDestroy {
             type: 'ibm-icon',
             name: 'textCreation',
           },
-          parentUrl: '/app/forms',
+          parentUrl: '/home/forms',
           children: [
             {
               name: 'General',
-              url: '/app/forms/general',
+              url: '/home/forms/general',
             },
             {
               name: 'Advanced',
-              url: '/app/forms/advanced',
+              url: '/home/forms/advanced',
             },
             {
               name: 'Validation & Layouts',
-              url: '/app/forms/validation',
+              url: '/home/forms/validation',
             },
             {
               name: 'Wizard',
-              url: '/app/forms/wizard',
+              url: '/home/forms/wizard',
             },
           ]
         },
         {
           name: 'Charts',
-          url: '/app/charts',
+          url: '/home/charts',
           prefix: {
             type: 'ibm-icon',
             name: 'chartColumn',
@@ -613,7 +614,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         },
         {
           name: 'Icons',
-          url: '/app/icons',
+          url: '/home/icons',
           prefix: {
             type: 'ibm-icon',
             name: 'magicWand',
@@ -621,7 +622,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         },
         {
           name: 'Typography',
-          url: '/app/typography',
+          url: '/home/typography',
           prefix: {
             type: 'ibm-icon',
             name: 'textTracking',
@@ -753,10 +754,15 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
   ]
 
-  public menu: Array<MenuType> = this.creatorMenu
+  public menu: Array<MenuType> = []
 
   constructor(private settingsService: SettingsService,
-              private appMenuService: AppMenuService) {
+              private appMenuService: AppMenuService,
+              private _update: UpdateService) {
+    this._update.getMenu()
+    .subscribe(res=>{
+      this.menu = res.data[0]["data"]
+    })
   }
 
   ngOnInit(): void {

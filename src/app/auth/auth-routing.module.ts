@@ -15,6 +15,7 @@ import {AuthResetPasswordComponent} from "./auth-reset-password/auth-reset-passw
 import {AuthConfirmationComponent} from "./auth-confirmation/auth-confirmation.component"
 import {AuthBookADemoComponent} from "./auth-book-a-demo/auth-book-a-demo.component"
 import {ComingSoonComponent} from "./coming-soon/coming-soon.component"
+import { AuthSignoutComponent } from './auth-signout/auth-signout.component'
 
 const routes: Routes = [
   {
@@ -100,8 +101,12 @@ const routes: Routes = [
     component: AppLayoutBasicComponent,
     children: [
       {
-        path: 'signin',
+        path: '',
         component: AuthLoginComponent,
+      },
+      {
+        path: 'signout',
+        component: AuthSignoutComponent,
       },
       {
         path: 'signup',

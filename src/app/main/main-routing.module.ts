@@ -133,13 +133,13 @@ const starterPages = [
 
 const routeForPages = [
   {
-    path: 'dashboard',
+    path: '',
     data: {
       breadcrumb: 'Dashboard'
     },
     children: [
       {
-        path: 'default',
+        path: '',
         component: DashboardDefaultComponent,
         data: {
           breadcrumb: 'Default'
@@ -486,11 +486,11 @@ const routeForPages = [
       },
     ]
   },
-  {
-    path: '**',
-    redirectTo: '/app/dashboard/default',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: '/dashboard',
+  //   pathMatch: 'full',
+  // },
 ]
 
 const routes: Routes = [

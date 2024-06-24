@@ -10,6 +10,8 @@ import {Router} from '@angular/router'
 
 import {NotificationService} from "carbon-components-angular"
 
+import {UpdateService} from "../../services/update.service"
+
 @Component({
   selector: 'app-auth-login',
   templateUrl: './auth-login.component.html',
@@ -21,7 +23,8 @@ export class AuthLoginComponent implements OnInit {
 
   constructor(protected formBuilder: FormBuilder,
               private router: Router,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private _update: UpdateService) {
   }
 
   ngOnInit(): void {
@@ -32,17 +35,39 @@ export class AuthLoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formGroup.markAllAsTouched()
-    this.router.navigate(['/app'])
-    this.notificationService.showToast({
-      type: "info",
-      title: "Sample toast",
-      subtitle: "Sample subtitle message",
-      caption: "Sample caption",
-      target: "#notificationHolder",
-      message: "message",
-      duration: 2000,
-    })
+    this._update.login(this.formGroup.value)
+    .subscribe({
+      next: (response) => {
+        localStorage.setItem("authToken",JSON.stringify(response.data.authToken))
+        localStorage.setItem("_profile",JSON.stringify(response.data))
+        this.notificationService.showToast({
+          type: "success",
+          title: response.message,
+          target: "#notificationHolder",
+          duration: 2000,
+        })
+         this.router.navigate(['/home'])
+      },
+      error: (error) => {
+        this.notificationService.showToast({
+          type: "error",
+          title: error,
+          target: "#notificationHolder",
+          duration: 2000,
+        })
+      }
+    });
+    // this.formGroup.markAllAsTouched()
+    // this.router.navigate(['/app'])
+    // this.notificationService.showToast({
+    //   type: "info",
+    //   title: "Sample toast",
+    //   subtitle: "Sample subtitle message",
+    //   caption: "Sample caption",
+    //   target: "#notificationHolder",
+    //   message: "message",
+    //   duration: 2000,
+    // })
   }
 
   isValid(name) {

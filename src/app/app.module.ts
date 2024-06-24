@@ -24,6 +24,11 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools'
 import {environment} from '../environments/environment'
 import {EffectsModule} from '@ngrx/effects'
 import {AppEffects} from './store/app.effects'
+import { ApiService } from './services/api.service'
+import { UpdateService } from './services/update.service'
+import { AuthGuard } from '../app/shared/guard'
+import { UrlService } from './services/url.service'
+import { ProfileService } from './services/profile.service'
 
 @NgModule({
   declarations: [
@@ -42,7 +47,13 @@ import {AppEffects} from './store/app.effects'
     EffectsModule.forRoot([AppEffects]),
     NgxMdModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    ApiService,
+    UpdateService,
+    AuthGuard,
+    UrlService,
+    ProfileService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

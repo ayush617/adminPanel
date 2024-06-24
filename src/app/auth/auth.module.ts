@@ -10,6 +10,7 @@ import {AuthForgotPasswordComponent} from './auth-forgot-password/auth-forgot-pa
 import {AuthResetPasswordComponent} from './auth-reset-password/auth-reset-password.component'
 import {AuthBookADemoComponent} from './auth-book-a-demo/auth-book-a-demo.component'
 import {ComingSoonComponent} from "./coming-soon/coming-soon.component"
+import {AuthSignoutComponent} from "./auth-signout/auth-signout.component"
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {ComingSoonComponent} from "./coming-soon/coming-soon.component"
     AuthResetPasswordComponent,
     AuthBookADemoComponent,
     ComingSoonComponent,
+    AuthSignoutComponent
   ],
   imports: [
     CommonModule,

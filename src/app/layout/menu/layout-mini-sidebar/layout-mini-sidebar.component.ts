@@ -91,6 +91,8 @@ export class LayoutMiniSidebarComponent implements OnInit {
 
   public loading: boolean = false
 
+  profile = JSON.parse(localStorage.getItem("_profile"))
+
   constructor() {
   }
 
