@@ -1,10 +1,10 @@
 <div fxFill fxLayout="column">
   <main-header>
     <main-header-title>
-      The company tasks
+      The {{profile.organizationName}} tasks
     </main-header-title>
     <main-header-tools>
-      <button ibmButton="primary" size="sm">
+      <button (click)="fetchTasks(activeUser)" ibmButton="primary" size="sm">
         Synchronise
         <svg class="bx--btn__icon" ibmIconCheckmarkOutline size="20"></svg>
       </button>
@@ -28,8 +28,10 @@
             </div>
             <div class="mr-4">
               <div>
-                <div class="app-helper-text-01">david@common.com</div>
-                <div class="app-expressive-heading-02">David Robson</div>
+                <!-- <div class="app-expressive-heading-02">{{profile?.organizationName}}</div> -->
+                <!-- <div class="app-helper-text-01">Signed in as</div> -->
+                <div class="app-expressive-heading-02">{{profile?.firstName}} {{profile?.lastName}}</div>
+                <div class="app-helper-text-01">({{profile?.userName}})</div>
               </div>
             </div>
           </div>
@@ -37,7 +39,7 @@
           <div fxFlex class="relative">
             <div class="app-a-box app-scrollbar-fix">
               <ng-scrollbar>
-                <div class="mt-2">
+                <!-- <div class="mt-2">
                   <div class="app-list-header-pill">TAGS</div>
                   <div class="app-list-pill">
                     <ng-container *ngFor="let tag of tags">
@@ -50,13 +52,13 @@
                       </div>
                     </ng-container>
                   </div>
-                </div>
+                </div> -->
                 <div class="mt-2">
                   <div class="app-list-header-pill">TEAM MEMBERS</div>
                   <div class="app-list-pill">
                     <ng-container *ngFor="let user of users">
                       <div class="app-list-pill__item">
-                        <div class="app-list-pill__item__inner">
+                        <div (click)="fetchTasks(user._id)" class="app-list-pill__item__inner" [ngClass]="{'app-list-pill__item__inner--active':activeUser == user._id}">
                           <img class="h-3 w-3 rounded-full mr-2" [src]="user.avatar"/>
                           {{user.name}}
                         </div>
@@ -64,7 +66,7 @@
                     </ng-container>
                   </div>
                 </div>
-                <div class="mt-2">
+                <!-- <div class="mt-2">
                   <div class="app-list-header-pill">ARCHIVES</div>
                   <div class="app-list-pill">
                     <ng-container *ngFor="let archive of archives">
@@ -76,7 +78,7 @@
                       </div>
                     </ng-container>
                   </div>
-                </div>
+                </div> -->
               </ng-scrollbar>
             </div>
           </div>
@@ -124,6 +126,8 @@
                                         [tasks]="taskGroups"
                                         [transparent]="false"
                                         [filterText]="txtSearch"
+                                        (onSave)="saveTasks($event)"
+                                        (onDelete)="deleteTasks($event)"
                         ></main-tasks-list>
                       </div>
                     </div>

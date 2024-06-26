@@ -1,5 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core'
-import {AppTasksComponent} from "../../../../@common"
+import {AppTasksComponent} from "../../../@common"
+import { ProfileService } from 'src/app/services/profile.service'
+import { UpdateService } from 'src/app/services/update.service'
+import { NotificationService } from 'carbon-components-angular'
 
 
 @Component({
@@ -11,7 +14,8 @@ export class TasksComponent implements OnInit {
 
   @ViewChild('appTasksList', {static: true}) appTasksList: AppTasksComponent
 
-  public taskGroups = [
+  public taskGroups = []
+  taskGroupsOld  = [
     {
       groupName: 'Monday frontend meeting',
       id: 'sadas',
@@ -157,7 +161,9 @@ export class TasksComponent implements OnInit {
     }
   ]
 
-  public tags = [
+  public tags = []
+
+  tagsOld = [
     {
       name: 'Meetings',
       active: true,
@@ -193,36 +199,43 @@ export class TasksComponent implements OnInit {
     },
   ]
 
-  public users = [
+  public users = []
+
+  usersOld = [
     {
       avatar: 'assets/img/avatar/avatar2.jpg',
-      name: 'John Belinda',
+      name: 'John Belinda (me)',
       text: 'Cannot start service web: error while creating mount source path ',
       date: '5 mins ago',
+      active: true
     },
     {
       avatar: 'assets/img/avatar/avatar3.jpg',
       name: 'Reta Collen',
       text: 'Automate the update of compose spec from docker-compose ',
       date: '1 hour ago',
+      active: false
     },
     {
       avatar: 'assets/img/avatar/avatar6.jpg',
       name: 'Elizabeth Mozelle',
       text: 'Add an option to config: entries to name the config by content hash',
       date: '5 hours ago',
+      active: false
     },
     {
       avatar: 'assets/img/avatar/avatar7.jpg',
       name: 'Marys Rob',
       text: 'Breaking Changes: Internal/External Secrets and Name/Label Problems with External Secrets',
       date: '1 day ago',
+      active: false
     },
     {
       avatar: 'assets/img/avatar/avatar8.jpg',
       name: 'Adoree Morgan',
       text: 'cpus value type in output of config command is not consistent in version 1.27.3 ',
       date: '3 days ago',
+      active: false
     }
   ]
 
@@ -243,11 +256,113 @@ export class TasksComponent implements OnInit {
 
   public txtSearch: string = ''
   public leftSidebarVisibility: boolean = true
+  public profile
 
-  constructor() {
+  public activeUser = ""
+
+  constructor(private _profile: ProfileService,
+              private _update: UpdateService,
+              private notificationService: NotificationService,
+  ) {
   }
 
   ngOnInit(): void {
+    this.profile = this._profile.data;
+    this.users.push({
+      avatar: 'assets/img/avatar/avatar2.jpg',
+      name: `${this.profile.firstName} (me)`,
+      text: 'Cannot start service web: error while creating mount source path ',
+      date: '5 mins ago',
+      _id: this.profile._id
+    });
+    this.fetchTasks(this.profile._id)
+    this.fetchUsers()
+  }
+
+  fetchTasks(forUser){
+    this.activeUser = forUser
+    this._update.getPlugin("tasks",{organizationId:this.profile.organizationId,userId:forUser})
+    .subscribe(res=>{
+      this.displayTasks(res.data)
+    })
+  }
+
+  fetchUsers(){
+    this._update.getPlugin("users",{organizationId:this.profile.organizationId})
+    .subscribe(res=>{
+      this.displayUsers(res.data)
+    })
+  }
+
+  saveTasks(task){
+    if(task.unsaved){
+
+      delete task.unsaved
+      delete task.changed
+
+      let newObj = {
+        ...task,
+        createdAt: new Date(),
+        createdBy: this.profile._id,
+        userId: this.activeUser,
+        organizationId: this.profile.organizationId
+      }
+
+      this._update.createPlugin("tasks",newObj)
+      .subscribe(res=>{
+
+      })
+    } else {
+
+      delete task.changed
+
+      let updateObj = {
+       ...task,
+        updatedAt: new Date(),
+        updatedBy: this.profile._id,
+      }
+
+      this._update.updatePlugin("tasks",task._id,updateObj)
+      .subscribe(res=>{
+        this.notificationService.showToast({
+          type: "success",
+          title: "Task updated!",
+          target: "#notificationHolder",
+          duration: 2000,
+        })
+      })
+
+    }
+  }
+
+  deleteTasks(taskId){
+    this._update.deletePlugin("tasks",taskId)
+    .subscribe(res=>{
+
+    })
+  }
+
+  displayTasks(data){
+    this.taskGroups = []
+    data.forEach((el, index) => {
+      el.opened = (index === 0);
+      this.taskGroups.push(el);
+    });
+  }
+
+  displayUsers(data){
+    data.forEach(el => {
+      if(el._id != this.profile._id){
+        this.users.push({
+          avatar: 'assets/img/avatar/avatar2.jpg',
+          name: `${el.firstName}`,
+          text: 'Cannot start service web: error while creating mount source path ',
+          date: '5 mins ago',
+          _id: el._id
+          // active: true
+        });
+      }
+    });
   }
 
   onAddList() {

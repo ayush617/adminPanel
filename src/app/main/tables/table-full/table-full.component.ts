@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core'
 import {ColDef, GridOptions} from "@ag-grid-community/core"
 import {InfiniteRowModelModule} from "@ag-grid-community/infinite-row-model"
 import {ClientSideRowModelModule} from "@ag-grid-community/client-side-row-model"
@@ -97,6 +97,9 @@ const parseCSV = (csv) => {
 })
 export class TableFullComponent implements OnInit {
 
+  @Input() columnDefs:any = []
+  @Input() rowData:any = []
+
   public modules = [InfiniteRowModelModule, ClientSideRowModelModule]
   public gridOptions: GridOptions = {}
   public loading: boolean = false
@@ -106,81 +109,87 @@ export class TableFullComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createTable()
+    // this.createTable()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['columnDefs'] || changes['rowData']) {
+      this.createTable();
+    }
   }
 
   createTable() {
     this.loading = true
-    const columnDefs: Array<ColDef> = [
-      {
-        headerName: 'Company',
-        field: 'company',
-        cellClass: 'cell-flex-middle overflow-hidden',
-        cellRenderer: companyCellRenderer,
-        width: 350,
-        pinned: true,
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-      },
-      {
-        headerName: 'Last price',
-        field: 'last',
-        headerClass: 'cell-flex-right',
-        cellClass: 'cell-flex-middle cell-flex-right font-bold'
-      },
-      {
-        headerName: 'Change %',
-        field: 'chg_',
-        headerClass: 'cell-flex-right',
-        cellClass: 'cell-flex-middle cell-flex-right',
-        cellRenderer: numberCellRenderer,
-      },
-      {
-        headerName: 'Change',
-        field: 'chg',
-        headerClass: 'cell-flex-right',
-        cellClass: 'cell-flex-middle cell-flex-right',
-        cellRenderer: numberCellRenderer,
-      },
-      {
-        headerName: 'Rating',
-        field: 'rating',
-        headerClass: 'cell-flex-center',
-        cellClass: 'cell-flex-middle',
-        cellStyle: rateClassRenderer,
-      },
-      {
-        headerName: 'Volume',
-        field: 'vol',
-        headerClass: 'cell-flex-right',
-        cellClass: 'cell-flex-middle cell-flex-right'
-      },
-      {
-        headerName: 'Market Cap.',
-        field: 'mkt_cap',
-        headerClass: 'cell-flex-right',
-        cellClass: 'cell-flex-middle cell-flex-right'
-      },
-      {
-        headerName: 'Employees',
-        field: 'employees',
-        headerClass: 'cell-flex-right',
-        cellClass: 'cell-flex-middle cell-flex-right'
-      },
-      {
-        headerName: 'Sector',
-        field: 'sector',
-        headerClass: 'cell-flex-center',
-        cellClass: 'cell-flex-middle',
-        cellRenderer: sectorCellRenderer,
-      },
-    ]
+    const columnDefs: Array<ColDef> = []
+      // {
+      //   headerName: 'Company',
+      //   field: 'company',
+      //   cellClass: 'cell-flex-middle overflow-hidden',
+      //   cellRenderer: companyCellRenderer,
+      //   width: 350,
+      //   pinned: true,
+      //   checkboxSelection: true,
+      //   headerCheckboxSelection: true,
+      // },
+      // {
+      //   headerName: 'Last price',
+      //   field: 'last',
+      //   headerClass: 'cell-flex-right',
+      //   cellClass: 'cell-flex-middle cell-flex-right font-bold'
+      // },
+      // {
+      //   headerName: 'Change %',
+      //   field: 'chg_',
+      //   headerClass: 'cell-flex-right',
+      //   cellClass: 'cell-flex-middle cell-flex-right',
+      //   cellRenderer: numberCellRenderer,
+      // },
+      // {
+      //   headerName: 'Change',
+      //   field: 'chg',
+      //   headerClass: 'cell-flex-right',
+      //   cellClass: 'cell-flex-middle cell-flex-right',
+      //   cellRenderer: numberCellRenderer,
+      // },
+      // {
+      //   headerName: 'Rating',
+      //   field: 'rating',
+      //   headerClass: 'cell-flex-center',
+      //   cellClass: 'cell-flex-middle',
+      //   cellStyle: rateClassRenderer,
+      // },
+      // {
+      //   headerName: 'Volume',
+      //   field: 'vol',
+      //   headerClass: 'cell-flex-right',
+      //   cellClass: 'cell-flex-middle cell-flex-right'
+      // },
+      // {
+      //   headerName: 'Market Cap.',
+      //   field: 'mkt_cap',
+      //   headerClass: 'cell-flex-right',
+      //   cellClass: 'cell-flex-middle cell-flex-right'
+      // },
+      // {
+      //   headerName: 'Employees',
+      //   field: 'employees',
+      //   headerClass: 'cell-flex-right',
+      //   cellClass: 'cell-flex-middle cell-flex-right'
+      // },
+      // {
+      //   headerName: 'Sector',
+      //   field: 'sector',
+      //   headerClass: 'cell-flex-center',
+      //   cellClass: 'cell-flex-middle',
+      //   cellRenderer: sectorCellRenderer,
+      // },
+    
     this.http.get('assets/data/stocks.csv', {responseType: 'text'})
       .subscribe((response) => {
-        const rowData = parseCSV(response).map(row => createRowHelper(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[9], row[10]))
+        // const rowData = parseCSV(response).map(row => createRowHelper(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[9], row[10]))
         this.gridOptions = {
-          columnDefs: columnDefs,
-          rowData: rowData,
+          columnDefs: this.columnDefs,
+          rowData: this.rowData,
           rowHeight: 40,
           headerHeight: 40,
           rowSelection: 'multiple',

@@ -31,9 +31,9 @@ import { UrlService } from './services/url.service'
 import { ProfileService } from './services/profile.service'
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent
-  ],
+   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

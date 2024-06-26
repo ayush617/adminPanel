@@ -13,10 +13,11 @@ constructor() { }
         return "http://localhost:3000/api/login"
         break;
       case "getMenu":
-        return "http://localhost:3000/api/graph/organization"
+        return "http://localhost:3000/api/graph/organizations"
         break;
     
       default:
+        return `http://localhost:3000/api/${functionName}`
         break;
     }
   }

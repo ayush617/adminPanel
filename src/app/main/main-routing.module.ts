@@ -10,7 +10,7 @@ import {DashboardDefaultComponent} from "./dashboard/dashboard-default/dashboard
 import {DashboardAnalyticsComponent} from "./dashboard/dashboard-analytics/dashboard-analytics.component"
 import {DashboardCryptoComponent} from "./dashboard/dashboard-crypto/dashboard-crypto.component"
 import {ScrumBoardComponent} from "./scrum/scrum-board/scrum-board.component"
-import {TasksComponent} from "./tasks/tasks/tasks.component"
+import {TasksComponent} from "./tasks/tasks.component"
 import {FileManagerComponent} from "./file-manager/file-manager/file-manager.component"
 import {MailComponent} from "./mail/mail/mail.component"
 import {MessagesComponent} from "./messages/messages/messages.component"
@@ -59,6 +59,8 @@ import {StarterRightSidebarTabsComponent} from "./starters/right-sidebar/starter
 import {StarterApplicationBasicComponent} from "./starters/application/starter-application-basic/starter-application-basic.component"
 import {StarterApplicationAdvancedComponent} from "./starters/application/starter-application-advanced/starter-application-advanced.component"
 import {StarterApplicationComplexComponent} from "./starters/application/starter-application-complex/starter-application-complex.component"
+import { ManageComponent } from '../manage/manage.component'
+import {AttendanceComponent} from './attendance/attendance.component'
 
 const starterPages = [
   {
@@ -493,12 +495,56 @@ const routeForPages = [
   // },
 ]
 
+const newRouteForPages = [
+  {
+    path: 'home',
+    data: {
+      breadcrumb: 'Dashboard'
+    },
+    children: [
+      {
+        path: '',
+        component: DashboardDefaultComponent,
+        data: {
+          breadcrumb: 'Default'
+        },
+      },
+    ],
+  },
+  {
+    path: 'manage/:type',
+    data: {
+      breadcrumb: 'Manage'
+    },
+    children: [
+      {
+        path: '',
+        component: ManageComponent,
+      },
+    ],
+  },
+  {
+    path: 'tasks',
+    component: TasksComponent,
+    data: {
+      breadcrumb: 'Tasks'
+    },
+  },
+  {
+    path: 'attendance',
+    component: AttendanceComponent,
+    data: {
+      breadcrumb: 'Attendance'
+    },
+  }
+]
+
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    children: routeForPages,
-  },
+    children: newRouteForPages,
+  }
 ]
 
 @NgModule({

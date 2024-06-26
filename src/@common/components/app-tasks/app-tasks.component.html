@@ -1,5 +1,5 @@
 <ng-template #deleteGroupTemplate let-tooltip="tooltip" let-groupIndex="groupIndex">
-  <p>Delete list?</p>
+  <p>Permanently Delete?</p>
   <div class="bx--tooltip__footer">
     <button ibmButton="danger" size="sm" (click)="tooltip.doClose();onDeleteGroup(deletableTaskGroupIndex)">Delete
     </button>
@@ -35,7 +35,7 @@
               </button>
             </div>
             <div class="app-list__item__content" [ngClass]="{'line-through':getProgress(groupIndex) === '100%'}">
-              <ng-container *ngIf="taskFocusId === group.id">
+              <ng-container *ngIf="taskFocusId === group._id">
                 <input cdkTrapFocus
                        cdkTrapFocusAutoCapture
                        placeholder="List description..."
@@ -44,7 +44,7 @@
                        (input)="onGroupChange($event.target.value,groupIndex)"
                        [value]="group.groupName"/>
               </ng-container>
-              <ng-container *ngIf="taskFocusId !== group.id">
+              <ng-container *ngIf="taskFocusId !== group._id">
                 <input class="flex-1 app-list__item__input app-expressive-heading-02"
                        type="text"
                        placeholder="List description..."
@@ -71,7 +71,7 @@
           </div>
         </div>
         <div cdkDropList
-             id={{group.id}}
+             id={{group._id}}
              [cdkDropListData]="group.tasks"
              (cdkDropListDropped)="drop($event)"
              [cdkDropListConnectedTo]="getConnectedList()"
@@ -97,7 +97,7 @@
               </ng-container>
               <ng-container *ngIf="!task.checked">
                 <div class="app-list__item__content">
-                  <ng-container *ngIf="taskFocusId === task.id">
+                  <ng-container *ngIf="taskFocusId === task._id">
                     <input class="flex-1 app-list__item__input app-body-short-01"
                            placeholder="Task description..."
                            cdkTrapFocus
@@ -106,7 +106,7 @@
                            (input)="onTaskChange($event.target.value,groupIndex,taskIndex)"
                            [value]="task.description"/>
                   </ng-container>
-                  <ng-container *ngIf="taskFocusId !== task.id">
+                  <ng-container *ngIf="taskFocusId !== task._id">
                     <input class="flex-1 app-list__item__input app-body-short-01"
                            placeholder="Task description..."
                            type="text"
@@ -133,11 +133,15 @@
               </button>
             </div>
           </ng-container>
-          <div class="app-list__add-btn">
+          <div class="app-list__add-btn gap-2 flex">
             <ng-container *ngIf="_filterText === ''">
               <button (click)="onAddTask(groupIndex)" ibmButton="tertiary" size="sm">
                 Add task
                 <svg class="bx--btn__icon" ibmIconAdd size="20"></svg>
+              </button>
+              <button (click)="saveTask(groupIndex)" *ngIf="group.changed" ibmButton="primary" size="sm">
+                Save task
+                <svg class="bx--btn__icon" ibmIconSave size="20"></svg>
               </button>
             </ng-container>
           </div>

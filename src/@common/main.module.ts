@@ -192,7 +192,7 @@ import {AppContentSimpleComponent} from './components/app-content/app-content-si
 import {SafePipe} from "./pipes/safe"
 import {AppLogoComponent} from './components/app-logo/app-logo.component'
 import {AppBreadcrumbComponent} from './components/app-breadcrumb/app-breadcrumb.component'
-
+import {AppCalendarComponent} from './components/app-calendar/app-calendar.component'
 
 const MainModules = [
   RouterModule,
@@ -205,6 +205,7 @@ const MainModules = [
   A11yModule,
   ReactiveFormsModule,
   MatDialogModule,
+  // AppCalendarComponent
 ]
 
 const CarbonModules = [
@@ -384,6 +385,7 @@ const Components = [
   AppLogoComponent,
   AppLogoComponent,
   AppBreadcrumbComponent,
+  AppCalendarComponent
 ]
 
 const Pipes = [

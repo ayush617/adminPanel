@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core'
+import { ProfileService } from 'src/app/services/profile.service'
 
 @Component({
   selector: 'app-layout-mini-sidebar',
@@ -91,9 +92,10 @@ export class LayoutMiniSidebarComponent implements OnInit {
 
   public loading: boolean = false
 
-  profile = JSON.parse(localStorage.getItem("_profile"))
+  profile: any
 
-  constructor() {
+  constructor(private _profile: ProfileService) {
+    this.profile = this._profile.data;
   }
 
   ngOnInit(): void {

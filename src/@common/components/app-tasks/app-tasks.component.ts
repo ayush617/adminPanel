@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core'
+import {Component, OnInit, Input, SimpleChange, SimpleChanges, Output, EventEmitter} from '@angular/core'
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop"
 import {CheckboxChange} from "carbon-components-angular"
 
@@ -22,9 +22,14 @@ export class AppTasksComponent implements OnInit {
   @Input('tasks') taskGroups = []
   @Input('transparent') transparent = false
 
+  @Output() onSave = new EventEmitter();
+  @Output() onDelete = new EventEmitter();
+
   @Input() set filterText(value: string) {
     this._filterText = value
   }
+
+  changes = false
 
   get filterText(): string {
     return this._filterText
@@ -40,13 +45,19 @@ export class AppTasksComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  saveTask(groupIndex){
+    this.taskGroups[groupIndex].changed = false
+    this.onSave.emit(this.taskGroups[groupIndex])
+  }
+
   addGroup() {
     const uid = getUniqueId(5)
     const newGroup = {
       groupName: '',
-      id: uid,
+      _id: uid,
       opened: true,
-      tasks: []
+      tasks: [],
+      unsaved: true
     }
     this.taskGroups = [newGroup, ...this.taskGroups]
     this.taskFocusId = uid
@@ -107,6 +118,7 @@ export class AppTasksComponent implements OnInit {
   onToggleTask(event: CheckboxChange, groupIndex, taskIndex) {
     const {checked} = event
     this.taskGroups[groupIndex].tasks[taskIndex].checked = checked
+    this.taskGroups[groupIndex].changed = true
   }
 
   onToggleGroup(groupIndex) {
@@ -119,6 +131,7 @@ export class AppTasksComponent implements OnInit {
 
   onGroupChange(event, groupIndex) {
     this.taskGroups[groupIndex].groupName = event
+    this.taskGroups[groupIndex].changed = true
   }
 
   onAddTask(groupIndex) {
@@ -127,18 +140,21 @@ export class AppTasksComponent implements OnInit {
       description: '',
       level: 1,
       checked: false,
-      id: uid,
+      _id: uid,
     }
     this.taskGroups[groupIndex].tasks = [...this.taskGroups[groupIndex].tasks, newTask]
     this.taskFocusId = uid
+    this.taskGroups[groupIndex].changed = true
   }
 
   onDeleteGroup(groupIndex) {
+    this.onDelete.emit(this.taskGroups[groupIndex]._id)
     this.taskGroups.splice(groupIndex, 1)
   }
 
   onDeleteTask(groupIndex, taskIndex) {
     this.taskGroups[groupIndex].tasks.splice(taskIndex, 1)
+    this.taskGroups[groupIndex].changed = true
   }
 
   onSwitchPriority(groupIndex, taskIndex) {

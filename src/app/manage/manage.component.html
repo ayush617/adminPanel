@@ -1,0 +1,137 @@
+
+<main-sidenav-container>
+
+    <div fxFill fxLayout="column">
+
+    <main-header>
+      <main-header-title>
+        Manage <span style="text-transform: capitalize;">{{type}}</span>
+      </main-header-title>
+      <main-header-tools>
+        <button (click)="settingsVisible=true" ibmButton="primary" size="sm">
+          Create
+          <svg class="bx--btn__icon" ibmIconAdd size="20"></svg>
+        </button>
+      </main-header-tools>
+    </main-header>
+
+    <div fxFlex class="relative">
+      <main-sidenav-container panel="solid">
+        <app-table-full
+          [columnDefs]="columnDefs"
+          [rowData]="rowData"
+        >
+        </app-table-full>
+      </main-sidenav-container>
+    </div>
+
+    <main-sidenav
+      (close)="onCloseSettings($event)"
+      [opened]="settingsVisible"
+      [direction]="'right'"
+      [mode]="'over'"
+      [size]="'lg'">
+      
+      <div fxFlex="100%" fxFlex.gt-md="100%" class="app-card-row">
+        <div class="flex">
+          <div class="app-productive-heading-02 px-4">
+            Create <span style="text-transform: capitalize;">{{type}}</span>
+          </div>
+          <div fxFlex.gt-md="40px" fxFlex="40px" class="ml-auto">
+            <button
+              (click)="settingsVisible=false"
+              ibmButton="danger" size="field"
+              class="bx--btn--icon-only bx--btn--remove-tooltip">
+              <svg class="bx--btn__icon" ibmIconClose size="32"></svg>
+            </button>
+          </div>
+        </div>
+        <div fxLayout="row wrap" class="mb-6">
+          <div fxFlex="100%" fxFlex.gt-md="100%">
+            <div class="app-card">
+              <div class="app-card__content flex flex-row	flex-wrap justify-start align-middle gap-4">
+                <div *ngFor="let item of uniqueKeys" class="mb-6 w-2/5">
+                  <form [formGroup]="formGroup">
+  
+                    <ng-container *ngIf="item == '_id'">
+                      <ibm-label
+                        [invalid]="false"
+                        [invalidText]="''">
+                        Input {{item}}
+                        <input
+                          ibmText
+                          [size]="'sm'"
+                          [invalid]="false"
+                          [disabled]="false"
+                          theme="light"
+                          [placeholder]="item == '_id' ? 'keep blank to generate' :item"
+                          [autocomplete]="true"
+                          [formControlName]="item">
+                      </ibm-label>
+                    </ng-container>
+  
+                    <ng-container *ngIf="item == 'admin'">
+                      <div class="mb-6">
+                        <ibm-toggle
+                          [label]="item"
+                          [onText]="'True'"
+                          [offText]="'False'"
+                          size="sm"
+                          [formControlName]="item">
+                        </ibm-toggle>
+                      </div>
+                    </ng-container>
+  
+                    <ng-container *ngIf="item!='admin' && item!='_id' && !item.includes('Id')">
+                      <ibm-label
+                      [invalid]="false"
+                      [invalidText]="''">
+                      Input {{item}}
+                      <input
+                        ibmText
+                        [size]="'sm'"
+                        [invalid]="false"
+                        [disabled]="false"
+                        theme="light"
+                        [placeholder]="item"
+                        [autocomplete]="true"
+                        [formControlName]="item">
+                    </ibm-label>
+                    </ng-container>
+  
+                    <ng-container *ngIf="item && item.includes('Id')">
+                      <ibm-dropdown
+                        [label]="item"
+                        [helperText]="''"
+                        [size]="'sm'"
+                        [dropUp]="false"
+                        [invalid]="false"
+                        [invalidText]="''"
+                        [theme]="'light'"
+                        placeholder="Select"
+                        [disabled]="false"
+                        [formControlName]="item">
+                        <ibm-dropdown-list [items]="items"></ibm-dropdown-list>
+                      </ibm-dropdown>
+                    </ng-container>
+  
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="ml-auto">
+            <button (click)="submitForm()" ibmButton="primary" size="sm">
+              Create
+              <svg class="bx--btn__icon" ibmIconSave size="20"></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main-sidenav>
+  </div>
+</main-sidenav-container>
+

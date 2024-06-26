@@ -4,7 +4,7 @@ import { AuthGuard } from './shared/guard/auth.guard'
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     data:{
       breadcrumb: 'Home'
     },
