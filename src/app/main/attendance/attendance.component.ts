@@ -23,7 +23,7 @@ export class AttendanceComponent implements OnInit {
   public users = []
   public activeUser = ""
 
-  constructor(private _profile: ProfileService,
+  constructor(public _profile: ProfileService,
               private _update: UpdateService
   ) { }
 

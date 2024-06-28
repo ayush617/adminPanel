@@ -5,7 +5,7 @@
     </main-header-title>
     <main-header-tools>
       <div class="app_header__tools flex gap-2">
-        <button (click)="attendance()" *ngIf="!profile.presentToday" ibmButton="tertiary" size="sm" fxHide fxShow.gt-sm>
+        <button (click)="attendance()" *ngIf="!_profile.data.presentToday" ibmButton="tertiary" size="sm" fxHide fxShow.gt-sm>
           Mark Attendance
           <svg class="bx--btn__icon" ibmIconUserAdmin size="20"></svg>
         </button>
