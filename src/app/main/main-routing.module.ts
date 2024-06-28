@@ -502,15 +502,16 @@ const newRouteForPages = [
     data: {
       breadcrumb: 'Dashboard'
     },
-    children: [
-      {
-        path: '',
-        component: DashboardDefaultComponent,
-        data: {
-          breadcrumb: 'Default'
-        },
-      },
-    ],
+    component: DashboardDefaultComponent,
+    // children: [
+    //   {
+    //     path: '',
+    //     component: DashboardDefaultComponent,
+    //     data: {
+    //       breadcrumb: 'Default'
+    //     },
+    //   },
+    // ],
   },
   {
     path: 'manage/:type',
@@ -558,7 +559,12 @@ const newRouteForPages = [
     data: {
       // breadcrumb: 'Messages'
     },
-  }
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
+  },
 ]
 
 const routes: Routes = [

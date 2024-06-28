@@ -1,11 +1,10 @@
-<div class="mb-8" fxHide fxShow.lt-md>
-  <main-logo class="cursor-pointer" logoWidth="130px"></main-logo>
+<div class="mb-8">
+  <main-logo class="cursor-pointer" logoWidth="80px"></main-logo>
 </div>
-<h1 class="app-expressive-heading-06 mb-1">Sign in</h1>
-<div class="app-body-long-02 mb-8">
+<!-- <div class="app-body-long-02 mb-8">
   Don't have an account?
   <a ibmLink routerLink="../signup">Sign up</a>
-</div>
+</div> -->
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <div class="app-form">
     <div class="app-form__item">
@@ -49,7 +48,7 @@
           checked="true">
           Remember me?
         </ibm-checkbox>
-        <a ibmLink routerLink="../forgot-password">Forgot password?</a>
+        <a ibmLink routerLink="/auth/forgot-password">Forgot password?</a>
       </div>
     </div>
     <div class="app-form__submit">
@@ -60,7 +59,7 @@
     </div>
   </div>
 </form>
-<div class="app-separator mt-8 mb-8">or Sign In with</div>
+<!-- <div class="app-separator mt-8 mb-8">or Sign In with</div>
 <div fxLayout="row" class="">
   <div fxFlex="50" class="mr-1">
     <button class="w-full"
@@ -84,5 +83,5 @@
       </svg>
     </button>
   </div>
-</div>
+</div> -->
 

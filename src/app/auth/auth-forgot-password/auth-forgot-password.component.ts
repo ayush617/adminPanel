@@ -19,7 +19,7 @@ export class AuthForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      email: ['example@business.com', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
     }, {updateOn: 'blur'})
   }
 
