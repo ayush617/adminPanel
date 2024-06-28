@@ -5,19 +5,21 @@ import { Injectable } from '@angular/core';
 })
 export class UrlService {
 
-constructor() { }
+  base = "https://mini-coders.com/api"
+  // base = "http://localhost:3000"
+  constructor() { }
 
   generateUrl(functionName){
     switch (functionName) {
       case "login":
-        return "http://localhost:3000/api/login"
+        return `${this.base}/login`
         break;
       case "getMenu":
-        return "http://localhost:3000/api/graph/organizations"
+        return `${this.base}/graph/organizations`
         break;
     
       default:
-        return `http://localhost:3000/api/${functionName}`
+        return `${this.base}/${functionName}`
         break;
     }
   }
