@@ -193,6 +193,15 @@ import {SafePipe} from "./pipes/safe"
 import {AppLogoComponent} from './components/app-logo/app-logo.component'
 import {AppBreadcrumbComponent} from './components/app-breadcrumb/app-breadcrumb.component'
 import {AppCalendarComponent} from './components/app-calendar/app-calendar.component'
+import { FullCalendarModule } from '@fullcalendar/angular'
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import {AppCreateComponent} from './components/app-create/app-create.component'
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 const MainModules = [
   RouterModule,
@@ -205,7 +214,7 @@ const MainModules = [
   A11yModule,
   ReactiveFormsModule,
   MatDialogModule,
-  // AppCalendarComponent
+  FullCalendarModule
 ]
 
 const CarbonModules = [
@@ -385,7 +394,8 @@ const Components = [
   AppLogoComponent,
   AppLogoComponent,
   AppBreadcrumbComponent,
-  AppCalendarComponent
+  AppCalendarComponent,
+  AppCreateComponent
 ]
 
 const Pipes = [

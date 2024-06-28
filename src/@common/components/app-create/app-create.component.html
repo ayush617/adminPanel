@@ -1,0 +1,85 @@
+<div class="app-search">
+  <div class="app-search__overlay"></div>
+  <div class="app-search__modal" (click)="onClose()">
+    <div class="app-search__modal__inner" (click)="$event.stopPropagation()">
+      <div class="app-search__result" ngClass.lt-md="app-search__result--xs">
+        <div fxFill fxLayout="row wrap">
+          <div fxFlex="100%" fxFlex.gt-sm="100%" class="app-search__result__pane2">
+            <form [formGroup]="formGroup">
+              <div class="flex flex-col gap-4">
+                <div>
+                  <ibm-label
+                  [invalid]="false"
+                  [invalidText]="''">
+                  <input
+                    ibmText
+                    [size]="'sm'"
+                    [invalid]="false"
+                    [disabled]="false"
+                    theme="light"
+                    [placeholder]="'Add title'"
+                    [autocomplete]="true"
+                    [formControlName]="'title'">
+                </ibm-label>
+                </div>
+  
+                <div class="flex flex-row items-center">
+                  <div class="w-1/6">
+                    Start: 
+                  </div>
+                  <div>
+                    <ibm-date-picker
+                    [label]="''"
+                    [placeholder]="'mm/dd/yyyy'"
+                    [language]="'en'"
+                    [size]="'md'"
+                    [theme]="'light'"
+                    [value]="''"
+                    [disabled]="false"
+                    [invalid]="false"
+                    [invalidText]="''"
+                    [dateFormat]="'m/d/Y'"
+                    [formControlName]="'start'">
+                  </ibm-date-picker>
+                  </div>
+                </div>
+  
+                <div class="flex flex-row items-center">
+                  <div class="w-1/6">
+                    End: 
+                  </div>
+                  <div>
+                    <ibm-date-picker
+                    [label]="''"
+                    [placeholder]="'mm/dd/yyyy'"
+                    [language]="'en'"
+                    [size]="'md'"
+                    [theme]="'light'"
+                    [value]="''"
+                    [disabled]="false"
+                    [invalid]="false"
+                    [invalidText]="''"
+                    [dateFormat]="'m/d/Y'"
+                    [formControlName]="'end'">
+                  </ibm-date-picker>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="app-search__result__btn flex justify-end gap-2">
+              <button (click)="onClose()" ibmButton="tertiary" size="sm">
+                Cancel
+              </button>
+              <button (click)="createEvent()" ibmButton="primary" size="sm">
+                Create
+                <svg class="bx--btn__icon" ibmIconArrowRight size="20"></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

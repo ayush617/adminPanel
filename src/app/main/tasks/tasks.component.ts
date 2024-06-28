@@ -259,6 +259,7 @@ export class TasksComponent implements OnInit {
   public profile
 
   public activeUser = ""
+  formGroup
 
   constructor(private _profile: ProfileService,
               private _update: UpdateService,
@@ -281,14 +282,14 @@ export class TasksComponent implements OnInit {
 
   fetchTasks(forUser){
     this.activeUser = forUser
-    this._update.getPlugin("tasks",{organizationId:this.profile.organizationId,userId:forUser})
+    this._update.getPlugin("tasks",[{organizationId:this.profile.organizationId,userId:forUser}])
     .subscribe(res=>{
       this.displayTasks(res.data)
     })
   }
 
   fetchUsers(){
-    this._update.getPlugin("users",{organizationId:this.profile.organizationId})
+    this._update.getPlugin("users",[{organizationId:this.profile.organizationId}])
     .subscribe(res=>{
       this.displayUsers(res.data)
     })

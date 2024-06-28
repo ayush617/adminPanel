@@ -9,4 +9,12 @@ export class ProfileService {
 
   constructor() { }
 
+  updateProfile(obj){
+    let oldData = this.data
+    this.data = {}
+    this.data = {...oldData,...obj};
+    localStorage.setItem('_profile', JSON.stringify(this.data));
+    return this.data
+  }
+
 }

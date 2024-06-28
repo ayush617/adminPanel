@@ -341,6 +341,15 @@
       }
     }
 
+    &.app-list-pill__item__inner--hovered {
+      background: var(--theme-list-pill--hover-background);
+      color: var(--theme-list-pill--hover-color);
+
+      svg {
+        fill: var(--theme-list-pill--hover-color);
+      }
+    }
+
     &.app-list-pill__item__inner--disabled {
       cursor: no-drop;
       opacity: .7;

@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core'
+import { FormBuilder } from '@angular/forms'
+import { from } from 'rxjs'
+import { ProfileService } from 'src/app/services/profile.service'
+import { UpdateService } from 'src/app/services/update.service'
 
 @Component({
   selector: 'app-messages',
@@ -49,7 +53,8 @@ export class MessagesComponent implements OnInit {
       read: false,
     }
   ]
-  public messages = [
+  public messages = []
+  messagesOld = [
     {
       name: 'jonny cluster',
       avatar: {
@@ -144,7 +149,8 @@ export class MessagesComponent implements OnInit {
   ]
   public selectedItem: any = null
 
-  public selectedChannel = [
+  public selectedChannel = []
+  selectedChannelOld = [
     {
       separator: true,
       time: 'Tuesday, October 27th'
@@ -275,12 +281,35 @@ export class MessagesComponent implements OnInit {
   ]
 
   public leftSidebarVisibility: boolean = true
+  public fromUser:any = ""
+  message = ""
+  formGroup
 
-  constructor() {
+  constructor(public _profile: ProfileService,
+              private _update: UpdateService,
+              private _fb: FormBuilder,){
   }
 
   ngOnInit(): void {
+    const form = {
+      search: ['']
+    }
+    this.formGroup = this._fb.group(form);
+
     this.selectedItem = this.channels[0]
+    this.messages.push({
+      _id: this._profile.data._id,
+      name: `${this._profile.data.firstName} (me)`,
+      avatar: {
+        type: 'img',
+        src: 'assets/img/avatar/avatar2.jpg',
+      },
+      active: true,
+      read: false,
+      status: 'app-symbol--status-success',
+    })
+    this.fetchUsers()
+    this.fetchMessages(this.messages[0])
   }
 
   onSelect(item) {
@@ -289,6 +318,129 @@ export class MessagesComponent implements OnInit {
 
   onToggleLeftSidebar() {
     this.leftSidebarVisibility = !this.leftSidebarVisibility
+  }
+
+
+  fetchMessages(data){
+    this.fromUser = data
+    this._update.getPlugin("messages",
+    [{organizationId:this._profile.data.organizationId}],
+    null,
+    [{"from":this._profile.data._id,"to":this.fromUser?._id},{"from":this.fromUser?._id,"to":this._profile.data._id}],
+    {sortKey:"sentAt", sortType:"1"},
+    [{"$lookup":{"from":"users","localField":"from","foreignField":"_id","as":"fromUser"}},{"$lookup":{"from":"users","localField":"to","foreignField":"_id","as":"toUser"}},{ "$addFields": { "fromUser": { "$toString": { "$arrayElemAt": ["$fromUser.firstName", 0] } } } },{ "$addFields": { "toUser": { "$toString": { "$arrayElemAt": ["$toUser.firstName", 0] } } } }])
+    .subscribe(res=>{
+      this.showMessages(res.data)
+    })
+  }
+
+  // showMessages(data){
+  //   // this.showEvent(res.data)
+  //   console.log(data,"==========")
+  // }
+
+  fetchUsers(){
+    this._update.getPlugin("users",[{organizationId:this._profile.data.organizationId}])
+    .subscribe(res=>{
+      this.displayUsers(res.data)
+    })
+  }
+
+  displayUsers(data){
+    data.forEach(el => {
+      if(el._id != this._profile.data._id){
+        this.messages.push( {
+          name: el.firstName,
+          avatar: {
+            type: 'img',
+            src: 'assets/img/avatar/avatar3.jpg',
+          },
+          active: false,
+          read: true,
+          _id: el._id,
+          // status: 'app-symbol--status-success',
+        });
+      }
+    });
+  }
+
+  showMessages(data,reset=true,lastProfile="") {
+    reset ? this.selectedChannel = [] : '';
+    // let lastProfile = ""
+    let date = new Date()
+    let insertedToday = false
+    data.forEach(el => {
+      let dateToCheck = new Date(el.sentAt)
+      // if(!insertedToday && dateToCheck.getUTCFullYear() === date.getUTCFullYear() &&
+      //     dateToCheck.getUTCMonth() === date.getUTCMonth() &&
+      //     dateToCheck.getUTCDate() === date.getUTCDate()){
+      //   this.selectedChannel.push({
+      //     separator: true,
+      //     time: 'Today'
+      //   })
+      //   insertedToday = true
+      // }
+      if(lastProfile == el.from ){
+        this.selectedChannel[this.selectedChannel.length-1].rows.push({
+          content: el.message,
+        }) 
+      }else {
+        if(el.from == this._profile.data._id){
+          this.selectedChannel.push({
+            user: {
+              name: `${this._profile.data.firstName} (me)`,
+              avatar: {
+                type: 'img',
+                src: 'assets/img/avatar/avatar2.jpg',
+              },
+              active: false,
+              status: 'app-symbol--status-success',
+            },
+            rows: [
+              {
+                // time: '6:55 PM',
+                content: el.message,
+              }
+            ]
+          })
+        } else {
+          this.selectedChannel.push({
+            user: {
+              name: el.fromUser,
+              avatar: {
+                type: 'img',
+                src: 'assets/img/avatar/avatar3.jpg',
+              },
+              active: false,
+              // status: 'app-symbol--status-success',
+            },
+            rows: [
+              {
+                // time: '6:55 PM',
+                content: el.message,
+              }
+            ]
+          })
+        }
+      }
+      lastProfile = el.from
+    });
+  }
+
+  
+  sendMessage(){
+    let newObj = {
+      "to": this.fromUser._id,
+      "from": this._profile.data._id,
+      "sentAt": new Date(),
+      "organizationId": this._profile.data.organizationId,
+      "message": this.formGroup.value.search
+    }
+    this._update.createPlugin("messages",newObj)
+    .subscribe(res=>{
+      this.showMessages([newObj],false,this._profile.data._id)
+      this.formGroup.reset()
+    })
   }
 
 }

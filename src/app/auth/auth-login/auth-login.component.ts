@@ -11,6 +11,7 @@ import {Router} from '@angular/router'
 import {NotificationService} from "carbon-components-angular"
 
 import {UpdateService} from "../../services/update.service"
+import { ProfileService } from 'src/app/services/profile.service'
 
 @Component({
   selector: 'app-auth-login',
@@ -24,13 +25,14 @@ export class AuthLoginComponent implements OnInit {
   constructor(protected formBuilder: FormBuilder,
               private router: Router,
               private notificationService: NotificationService,
-              private _update: UpdateService) {
+              private _update: UpdateService,
+              private _profile: ProfileService,) {
   }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      email: ['example@business.com', [Validators.required, Validators.email]],
-      password: ['xYzXxXzY', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
     }, {updateOn: 'blur'})
   }
 
@@ -39,7 +41,7 @@ export class AuthLoginComponent implements OnInit {
     .subscribe({
       next: (response) => {
         localStorage.setItem("authToken",JSON.stringify(response.data.authToken))
-        localStorage.setItem("_profile",JSON.stringify(response.data))
+        this._profile.updateProfile(response.data)
         this.notificationService.showToast({
           type: "success",
           title: response.message,

@@ -81,8 +81,20 @@
                         </ibm-toggle>
                       </div>
                     </ng-container>
+
+                    <ng-container *ngIf="item == 'superAdmin'">
+                      <div class="mb-6">
+                        <ibm-toggle
+                          [label]="item"
+                          [onText]="'True'"
+                          [offText]="'False'"
+                          size="sm"
+                          [formControlName]="item">
+                        </ibm-toggle>
+                      </div>
+                    </ng-container>
   
-                    <ng-container *ngIf="item!='admin' && item!='_id' && !item.includes('Id')">
+                    <ng-container *ngIf="item!='superAdmin' && item!='admin' && item!='_id' && !item.includes('Id')">
                       <ibm-label
                       [invalid]="false"
                       [invalidText]="''">

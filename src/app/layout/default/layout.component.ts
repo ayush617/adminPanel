@@ -5,6 +5,7 @@ import {defaultRouterTransition, MenuType} from "../../../@common"
 import {SettingsService} from "../../../@common"
 import {AppMenuService} from "../../../@common"
 import { UpdateService } from 'src/app/services/update.service'
+import { ProfileService } from 'src/app/services/profile.service'
 
 @Component({
   selector: 'app-layout',
@@ -758,10 +759,12 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   constructor(private settingsService: SettingsService,
               private appMenuService: AppMenuService,
-              private _update: UpdateService) {
+              private _update: UpdateService,
+              private _profile: ProfileService) {
     this._update.getMenu()
     .subscribe(res=>{
-      this.menu = res.data[0]["data"]
+      this.menu = res.data[0]["data"];
+      this.aditionalMenu()
     })
   }
 
@@ -774,6 +777,67 @@ export class LayoutComponent implements OnInit, OnDestroy {
           this.lockScreenVisible = true
         }
       })
+    this._update.getAttendance()
+    .subscribe(res=>{
+      this._profile.updateProfile({'presentToday':res.data.length?true:false})
+    })
+  }
+
+  aditionalMenu(){
+    let children = [
+      {
+        "name": "Users",
+        "url": "/manage/users",
+        "prefix": {
+          "type": "ibm-icon",
+          "name": "user"
+        }
+      },
+      {
+        "name": "Plugins",
+        "url": "/manage/plugins",
+        "prefix": {
+          "type": "ibm-icon",
+          "name": "tools"
+        }
+      },
+      {
+        "name": "Tasks",
+        "url": "/manage/tasks",
+        "prefix": {
+          "name": "task",
+          "type": "ibm-icon"
+        }
+      },
+      {
+        "name": "Attendance",
+        "url": "/manage/attendance",
+        "prefix": {
+          "name": "calendar",
+          "type": "ibm-icon"
+        }
+      }
+    ]
+
+    if(this._profile.data.superAdmin){
+      children.unshift({
+        "name": "Organizations",
+        "url": "/manage/organizations",
+        "prefix": {
+          "type": "ibm-icon",
+          "name": "buildingInsights1"
+        }
+      });
+    }
+
+
+    if(this._profile.data.admin){
+      this.menu.push({
+        "groupName": "MANAGE",
+        "opened": true,
+        "children": children,
+      })
+    }
   }
 
   ngOnDestroy(): void {

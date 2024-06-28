@@ -29,6 +29,14 @@ import { UpdateService } from './services/update.service'
 import { AuthGuard } from '../app/shared/guard'
 import { UrlService } from './services/url.service'
 import { ProfileService } from './services/profile.service'
+import { FullCalendarModule } from '@fullcalendar/angular'
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+
+// FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+//   dayGridPlugin,
+//   interactionPlugin
+// ]);
 
 @NgModule({
   declarations: [	
@@ -36,6 +44,7 @@ import { ProfileService } from './services/profile.service'
    ],
   imports: [
     BrowserModule,
+    // FullCalendarModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FlexLayoutModule,

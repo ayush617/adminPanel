@@ -12,7 +12,7 @@ export class AuthSignoutComponent implements OnInit {
 
   ngOnInit() {
     localStorage.removeItem("authToken");
-    localStorage.removeItem("profile");
+    localStorage.removeItem("_profile");
     this.router.navigate(['/auth'])
   }
 

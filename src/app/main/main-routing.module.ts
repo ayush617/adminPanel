@@ -61,6 +61,7 @@ import {StarterApplicationAdvancedComponent} from "./starters/application/starte
 import {StarterApplicationComplexComponent} from "./starters/application/starter-application-complex/starter-application-complex.component"
 import { ManageComponent } from '../manage/manage.component'
 import {AttendanceComponent} from './attendance/attendance.component'
+import { EventsComponent } from './events/events.component'
 
 const starterPages = [
   {
@@ -535,6 +536,20 @@ const newRouteForPages = [
     component: AttendanceComponent,
     data: {
       breadcrumb: 'Attendance'
+    },
+  },
+  {
+    path: 'events',
+    component: EventsComponent,
+    data: {
+      breadcrumb: 'Events'
+    },
+  },
+  {
+    path: 'messages',
+    component: MessagesComponent,
+    data: {
+      breadcrumb: 'Messages'
     },
   }
 ]

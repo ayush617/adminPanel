@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core'
 
 import * as echarts from 'echarts'
 import {getDummyModel} from "../../../../@common/data/dummy"
+import { ProfileService } from 'src/app/services/profile.service'
 
 @Component({
   selector: 'app-dashboard-default',
@@ -69,10 +70,13 @@ export class DashboardDefaultComponent implements OnInit {
     }
   ]
 
-  constructor() {
+  profile
+
+  constructor(private _profile: ProfileService,) {
   }
 
   ngOnInit(): void {
+    this.profile = this._profile.data;
     this.createHistogram()
     this.createPunchCard()
     this.createGauge()

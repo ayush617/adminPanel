@@ -75,6 +75,7 @@ import { StarterApplicationAdvancedComponent } from './starters/application/star
 import { StarterApplicationComplexComponent } from './starters/application/starter-application-complex/starter-application-complex.component'
 import { ManageComponent } from '../manage/manage.component'
 import { AttendanceComponent } from './attendance/attendance.component'
+import { EventsComponent } from './events/events.component'
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { AttendanceComponent } from './attendance/attendance.component'
     StarterApplicationAdvancedComponent,
     StarterApplicationComplexComponent,
     ManageComponent,
-    AttendanceComponent
+    AttendanceComponent,
+    EventsComponent
   ],
   imports: [
     CommonModule,

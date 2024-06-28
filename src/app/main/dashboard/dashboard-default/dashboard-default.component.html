@@ -3,12 +3,12 @@
 
     <div fxLayout="row wrap" class="app-header app-header--hero">
       <div class="app_header__tools">
-        <button ibmButton="primary" size="sm" class="mr-1">
+        <!-- <button ibmButton="primary" size="sm" class="mr-1">
           Invoices
-        </button>
-        <button ibmButton="tertiary" size="sm" fxHide fxShow.gt-sm>
-          Schedule
-          <svg class="bx--btn__icon" ibmIconAdd size="20"></svg>
+        </button> -->
+        <button *ngIf="!profile.presentToday" ibmButton="tertiary" size="sm" fxHide fxShow.gt-sm>
+          Mark Attendance
+          <svg class="bx--btn__icon" ibmIconUserAdmin size="20"></svg>
         </button>
       </div>
       <div fxFlex="100%" fxFlex.gt-sm="50%" class="relative z-10">

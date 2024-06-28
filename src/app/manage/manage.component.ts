@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UpdateService } from '../services/update.service';
 import { FormBuilder } from '@angular/forms';
 import { NotificationService } from 'carbon-components-angular';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-manage',
@@ -16,7 +17,8 @@ export class ManageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private _update: UpdateService,
               private _fb: FormBuilder,
-              private notificationService: NotificationService,) { }
+              private notificationService: NotificationService,
+              private _profile: ProfileService) { }
 
   type
   columnDefs
@@ -49,10 +51,19 @@ export class ManageComponent implements OnInit {
 
     this.uniqueKeys = Array.from(keys);
 
-    const index = this.uniqueKeys.findIndex(item => item === "passwordHash");
+    let index = this.uniqueKeys.findIndex(item => item === "passwordHash");
     if (index !== -1) {
       this.uniqueKeys[index] = "password";
     }
+
+    if(!this._profile.data.superAdmin){
+      index = this.uniqueKeys.findIndex(item => item === "superAdmin");
+      this.uniqueKeys.splice(index, 1);
+  
+      index = this.uniqueKeys.findIndex(item => item === "organizationId");
+      this.uniqueKeys.splice(index, 1);
+    }
+
 
     this.columnDefs = this.uniqueKeys.map((key:any) => {
       if (key === '_id') {
@@ -104,6 +115,9 @@ export class ManageComponent implements OnInit {
     let formData = this.formGroup.value;
     if(formData._id == ""){
       delete formData._id
+    }
+    if(!this._profile.data.superAdmin){
+      formData = {...formData,...{organizationId:this._profile.data.organizationId}}
     }
     this._update.createManage(this.type,formData).subscribe(res=>{
       this.visibleData.push(res.data)
