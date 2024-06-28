@@ -48,7 +48,11 @@ export class AuthLoginComponent implements OnInit {
           target: "#notificationHolder",
           duration: 2000,
         })
-         this.router.navigate(['/home'])
+        if(response.data && response.data.welcome){
+          this.router.navigate(['/welcome'])
+        } else {
+          this.router.navigate(['/home'])
+        }
       },
       error: (error) => {
         this.notificationService.showToast({

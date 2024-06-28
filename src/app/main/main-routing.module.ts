@@ -551,6 +551,13 @@ const newRouteForPages = [
     data: {
       breadcrumb: 'Messages'
     },
+  },
+  {
+    path: 'welcome',
+    component: WelcomeComponent,
+    data: {
+      // breadcrumb: 'Messages'
+    },
   }
 ]
 

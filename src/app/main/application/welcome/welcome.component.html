@@ -2,19 +2,19 @@
   <ng-scrollbar>
     <div fxLayout="row" fxLayoutAlign="center start">
       <div fxFlex="100%" fxFlex.gt-md="80%" fxFlex.gt-lg="70%" class="app-content app-content--default">
-        <div class="mt-8 mb-12">
+        <!-- <div class="mt-8 mb-12">
           <main-logo class="cursor-pointer" logoWidth="200px"></main-logo>
-        </div>
+        </div> -->
         <div class="app-productive-heading-06 mb-8" style="max-width: 500px;">
-          Hi David, Welcome to your personal dashboard
+          Hi {{profile.data.firstName}}, Welcome to your personal dashboard
         </div>
         <p class="app-body-long-02 mb-4" style="max-width: 520px;">
-          Congratulations on starting your journey with <span class="font-bold">Admin platform</span>.<br/>
+          Congratulations on starting your journey with <span class="font-bold">{{profile.data.organizationName}}</span>.<br/>
           We are excited you are here and can't wait to help you get started on your entrepreneurial journey.<br/>
         </p>
-        <p class="app-body-long-02" style="max-width: 370px;">
+        <!-- <p class="app-body-long-02" style="max-width: 370px;">
           We recommended you complete the <span class="font-bold">tutorial sessions</span> and <span class="font-bold">upload your first project</span>.
-        </p>
+        </p> -->
         <div class="mt-10 app-cards-layout-1">
           <div fxLayout="row wrap" fxLayoutGap="1px grid">
             <div fxFlex="100%" fxFlex.gt-md="50%">
