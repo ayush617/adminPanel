@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { ProfileService } from './profile.service';
 export class ApiService {
 
 constructor(private _http: HttpClient,
-            private _profile: ProfileService
+            private _profile: ProfileService,
+            private router: Router,
 ) { }
 
   generateHeadders(headers){
@@ -23,22 +25,23 @@ constructor(private _http: HttpClient,
   }
 
   get(apiUrl, headers={}): Observable<any> {
-    return this._http.get<any>(apiUrl, this.generateHeadders(headers));
+    return this._http.get<any>(apiUrl, this.generateHeadders(headers))
+    .pipe(catchError(this.handleError));
   }
 
   post(apiUrl, body, headers={}): Observable<any> {
     return this._http.post<any>(apiUrl, body, this.generateHeadders(headers))
-    .pipe(
-      catchError(this.handleError)
-    );
+    .pipe(catchError(this.handleError));
   }
 
   put(apiUrl, body, headers={}): Observable<any> {
-    return this._http.put<any>(apiUrl, body, this.generateHeadders(headers));
+    return this._http.put<any>(apiUrl, body, this.generateHeadders(headers))
+    .pipe(catchError(this.handleError));
   }
 
   delete(apiUrl, headers={}): Observable<any> {
-    return this._http.delete<any>(apiUrl, this.generateHeadders(headers));
+    return this._http.delete<any>(apiUrl, this.generateHeadders(headers))
+    .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -52,6 +55,7 @@ constructor(private _http: HttpClient,
       switch (error.status) {
         case 401:
           errorMessage = 'Unauthorized access. Please check your credentials.';
+          this.router.navigate(['/auth']);
           break;
         case 403:
           errorMessage = 'Forbidden. You do not have the necessary permissions.';

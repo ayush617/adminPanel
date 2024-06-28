@@ -142,4 +142,8 @@ export class EventsComponent implements OnInit {
 
   }
 
+  onSearchClose(event){
+    this.createMode = false;
+  }
+
 }
