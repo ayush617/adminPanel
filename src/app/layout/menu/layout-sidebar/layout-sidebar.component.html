@@ -2,8 +2,13 @@
   <div class="app-sidebar__logo">
     <!-- <img class="app-sidebar__logo__white" src="assets/img/logo/logo-big-white.png"/>
     <img class="app-sidebar__logo__black" src="assets/img/logo/logo-big-black.png"/> -->
-    <div style="color: white;font-size:x-large;" class="app-sidebar__logo__white">
-      AdminPanel
+    <div class="flex flex-row items-center gap-2">
+      <div>
+        <img [style.width]="'40px'" src="assets/img/logo/logo.png"/>
+      </div>
+      <div style="color: white;font-size:x-large;" class="app-sidebar__logo__white">
+        AdminPanel
+      </div>
     </div>
     <ng-container *ngIf="opened">
       <div (click)="onSideBarToggle()" class="app-sidebar__toggle-btn">
