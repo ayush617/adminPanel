@@ -13,7 +13,8 @@ import {ScrumBoardComponent} from "./scrum/scrum-board/scrum-board.component"
 import {TasksComponent} from "./tasks/tasks.component"
 import {FileManagerComponent} from "./file-manager/file-manager/file-manager.component"
 import {MailComponent} from "./mail/mail/mail.component"
-import {MessagesComponent} from "./messages/messages/messages.component"
+import {MessagesComponent} from "./messages/messages.component"
+import {WhatsappComponent} from "./whatsapp/whatsapp.component"
 import {UserSettingsComponent} from "./user/user-settings/user-settings.component"
 import {UserLayoutComponent} from "./user/user-layout/user-layout.component"
 import {UserBillingComponent} from "./user/user-billing/user-billing.component"
@@ -62,6 +63,7 @@ import {StarterApplicationComplexComponent} from "./starters/application/starter
 import { ManageComponent } from '../manage/manage.component'
 import {AttendanceComponent} from './attendance/attendance.component'
 import { EventsComponent } from './events/events.component'
+import { LeadsComponent } from './leads/leads.component'
 
 const starterPages = [
   {
@@ -551,6 +553,20 @@ const newRouteForPages = [
     component: MessagesComponent,
     data: {
       breadcrumb: 'Messages'
+    },
+  },
+  {
+    path: 'whatsapp',
+    component: WhatsappComponent,
+    data: {
+      breadcrumb: 'Whatsapp'
+    },
+  },
+  {
+    path: 'leads',
+    component: LeadsComponent,
+    data: {
+      breadcrumb: 'Leads'
     },
   },
   {

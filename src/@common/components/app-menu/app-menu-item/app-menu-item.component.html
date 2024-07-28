@@ -4,6 +4,9 @@
       <ng-container *ngIf="item.prefix.type === 'ibm-icon'">
         <main-ibm-icon [iconName]="item.prefix.name" [iconSize]="'20'"></main-ibm-icon>
       </ng-container>
+      <ng-container *ngIf="item.prefix.type === 'fa'">
+        <i [class]="item.prefix.name" style="height: 20px;width: 20px;font-size: 20px;" aria-hidden="true"></i>
+      </ng-container>
     </div>
   </ng-container>
   <div class="app-sidebar__list__item__text">

@@ -816,6 +816,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
           "name": "calendar",
           "type": "ibm-icon"
         }
+      },
+      {
+        "name": "Whatsapp",
+        "url": "/manage/whatsapp",
+        "prefix": {
+          "name": "fab fa-whatsapp",
+          "type": "fa"
+        }
       }
     ]
 

@@ -32,6 +32,7 @@ import { ProfileService } from './services/profile.service'
 import { FullCalendarModule } from '@fullcalendar/angular'
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import { HashLocationStrategy, LocationStrategy } from '@angular/common'
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -61,7 +62,8 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
     UpdateService,
     AuthGuard,
     UrlService,
-    ProfileService
+    ProfileService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
