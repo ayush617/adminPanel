@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UrlService {
 
-  base = "https://api.mini-coders.com/node/api"
+  base = "https://api.mini-coders.com/node"
   // base = "http://localhost:3000"
   constructor() { }
 
