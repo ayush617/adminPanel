@@ -569,6 +569,20 @@ const newRouteForPages = [
       breadcrumb: 'Leads'
     },
   },
+    {
+    path: 'invoice',
+    component: UserTransactionsComponent, //InvoiceComponent, UserBillingComponent
+    data: {
+      breadcrumb: 'Invoice'
+    },
+  },
+  {
+    path: 'lists',
+    component: ScrumBoardComponent,
+    data: {
+      breadcrumb: 'List'
+    },
+  },
   {
     path: 'welcome',
     component: WelcomeComponent,

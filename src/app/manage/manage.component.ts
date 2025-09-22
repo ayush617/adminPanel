@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UpdateService } from '../services/update.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'carbon-components-angular';
 import { ProfileService } from '../services/profile.service';
 
@@ -18,15 +18,27 @@ export class ManageComponent implements OnInit {
               private _update: UpdateService,
               private _fb: FormBuilder,
               private notificationService: NotificationService,
-              private _profile: ProfileService) { }
+              private _profile: ProfileService) { 
+              this.fieldForm = this._fb.group({
+                fieldType: "",
+                fieldKey: ""
+              });
+              }
 
   type
   columnDefs
   rowData
   uniqueKeys
   formGroup
-
   visibleData
+  fieldForm: FormGroup;
+  keys: string[] = []; 
+
+  fields = [
+    { content: "Text Field", id: "text" },
+    { content: "Dropdown Field", id: "dropdown" },
+    { content: "Toggle Field", id: "toggle" }
+  ];
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -108,6 +120,7 @@ export class ManageComponent implements OnInit {
     keys.forEach(key => {
       form[key] = [''];
     });
+    this.keys = [...keys];
     this.formGroup = this._fb.group(form);
   }
 
@@ -131,5 +144,14 @@ export class ManageComponent implements OnInit {
       })
     })
   }
+
+  addField() {
+  const newKey = this.fieldForm.value['fieldKey'];
+  if (newKey && !this.formGroup.contains(newKey)) {
+    this.formGroup.addControl(newKey, this._fb.control(''));
+    this.keys.push(newKey);
+  }
+  this.fieldForm.reset();
+}
 
 }
