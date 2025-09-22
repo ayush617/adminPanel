@@ -1,0 +1,3 @@
+[submodule "dist/adminPanel-build-temp"]
+	path = dist/adminPanel-build-temp
+	url = https://github.com/ayush617/adminPanel-build.git
