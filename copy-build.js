@@ -1,7 +1,7 @@
 /**
  * Cross-platform build deploy script
  * Copies Angular build output from /build to /dist,
- * while preserving the .git folder for deployment repo.
+ * while preserving the .git folder and CNAME for deployment repo.
  */
 
 const fs = require("fs");
@@ -9,8 +9,12 @@ const path = require("path");
 
 const srcDir = path.join(__dirname, "build", "adminPanel-build-temp");
 const destDir = path.join(__dirname, "dist", "adminPanel-build-temp");
+
 const gitDir = path.join(destDir, ".git");
+const cnameFile = path.join(destDir, "CNAME");
+
 const gitBackup = path.join(__dirname, ".git-backup-temp");
+const cnameBackup = path.join(__dirname, ".CNAME-backup-temp");
 
 /**
  * Recursively copy a folder
@@ -23,7 +27,7 @@ function copyDir(src, dest) {
   }
 
   fs.readdirSync(src).forEach((file) => {
-    if (file === ".git") return; // never overwrite .git
+    if (file === ".git" || file === "CNAME") return; // never overwrite .git or CNAME
 
     const srcFile = path.join(src, file);
     const destFile = path.join(dest, file);
@@ -37,25 +41,23 @@ function copyDir(src, dest) {
 }
 
 /**
- * Preserve .git if present
+ * Preserve .git and CNAME if present
  */
-function backupGit() {
-  if (fs.existsSync(gitDir)) {
-    fs.renameSync(gitDir, gitBackup);
-  }
+function backupGitAndCNAME() {
+  if (fs.existsSync(gitDir)) fs.renameSync(gitDir, gitBackup);
+  if (fs.existsSync(cnameFile)) fs.renameSync(cnameFile, cnameBackup);
 }
 
 /**
- * Restore .git after copying
+ * Restore .git and CNAME after copying
  */
-function restoreGit() {
-  if (fs.existsSync(gitBackup)) {
-    fs.renameSync(gitBackup, gitDir);
-  }
+function restoreGitAndCNAME() {
+  if (fs.existsSync(gitBackup)) fs.renameSync(gitBackup, gitDir);
+  if (fs.existsSync(cnameBackup)) fs.renameSync(cnameBackup, cnameFile);
 }
 
 /**
- * Remove destination folder safely (without .git)
+ * Remove destination folder safely (without .git or CNAME)
  */
 function cleanDest() {
   if (fs.existsSync(destDir)) {
@@ -72,9 +74,9 @@ if (!fs.existsSync(srcDir)) {
 
 console.log(`🚀 Starting copy from ${srcDir} → ${destDir}`);
 
-backupGit();
+backupGitAndCNAME();
 cleanDest();
 copyDir(srcDir, destDir);
-restoreGit();
+restoreGitAndCNAME();
 
-console.log("✅ Build copied successfully (with .git preserved).");
+console.log("✅ Build copied successfully (with .git and CNAME preserved).");
